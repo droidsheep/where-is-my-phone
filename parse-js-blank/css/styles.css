@@ -5,7 +5,7 @@ body {
 }
 
 #main {
-    width: 500px;
+    width: 900px;
     margin: auto;
     text-align: left;
     background: white;
@@ -17,6 +17,29 @@ body {
 #main h1 {
     margin-top: 0;
     font-size: 35px;
+}
+
+#themap {
+	width: 900px; 
+	height: 500px;
+}
+
+.appcontent form {
+	text-align: center;
+}
+
+.logout {
+	text-align: right;
+	color: gray;
+	font-size: small;
+}
+
+.logout:HOVER {
+	text-align: right;
+	color: black;
+	font-size: small;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 #main ul {
