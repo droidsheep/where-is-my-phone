@@ -2,24 +2,35 @@ $(function() {
 
 	Parse.$ = jQuery;
 
-	Parse.initialize("hCUZFiOue9RLNMOOKuC91YVx7zMCTOwVhVSpm9CG",
-			"FoT3FhKGxK2BmQxyMBpohb2icTh1yj4W59kjcwmE");
-	var PositionObject = Parse.Object.extend("PositionObject"); // New subclass
-																// of
-																// Parse.Object
+	Parse.initialize("hCUZFiOue9RLNMOOKuC91YVx7zMCTOwVhVSpm9CG", "FoT3FhKGxK2BmQxyMBpohb2icTh1yj4W59kjcwmE");
+	var PositionObject = Parse.Object.extend("PositionObject"); // New subclass of Parse.Object
 
 	var query = new Parse.Query(PositionObject);
-	var map = null;
-
-	// query.equalTo("user", Parse.User.current());
 	query.ascending("createdAt");
+	// query.equalTo("user", Parse.User.current());
 
+	//	var usr = "theuser";
+	//	var pwd = "thepwd";
+	//	Parse.User.logIn(usr, pwd, {
+	//		success : function(user) {
+	//			self.showApp();
+	//			console.log(self);
+	//		},
+	//		error : function(user, error) {
+	//			$(".login-form .error").html("Invalid username or password. Please try again.").show();
+	//			$(".login-form button").removeAttr("disabled");
+	//			console.log(self);
+	//			console.log("error");
+	//		}
+	//	});
+
+	var map = null;
 	var mapOptions = {
 		zoom : 5,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
-	
-	
+
+	initWIMP();
 
 	function initWIMP() {
 		$(".add-point-form").bind("submit", function() {
@@ -28,10 +39,9 @@ $(function() {
 		$(".logout").bind("click", function() {
 			logout();
 		});
-		$(".login-form").bind("submit", function() {
-			login();
-		});
-		$(".signup-form").bind("submit", function() {
+		$(".login-form button").bind("click", login);
+
+		$(".signup-form button").bind("click", function() {
 			signup();
 		});
 
@@ -41,19 +51,33 @@ $(function() {
 			showLogin();
 		}
 	}
-	
-	initWIMP();
-	
+
+	function login() {
+		$(".login-form button").attr("disabled", "disabled");
+		var username = $("#login-username").val();
+		var password = $("#login-password").val();
+
+		Parse.User.logIn(username, password, {
+			success : function(user) {
+				showApp();
+			},
+			error : function(user, error) {
+				$(".login-form .error").html("Invalid username or password. Please try again.").show();
+				$(".login-form button").removeAttr("disabled");
+			}
+		});
+	}
+
 	function showApp() {
 		$(".login").hide();
 		$(".logout").show();
 		$(".appcontent").show();
-		
+
 		var themap = $("#themap")[0]; // ID-Selector: #
 		map = new google.maps.Map(themap, mapOptions);
 		update();
 	}
-	
+
 	function showLogin() {
 		$(".login").show();
 		$(".logout").hide();
@@ -87,28 +111,9 @@ $(function() {
 		});
 	}
 
-	function login() {
-		this.$(".login-form button").attr("disabled", "disabled");
-		var username = this.$("#login-username").val();
-		var password = this.$("#login-password").val();
-
-		Parse.User.logIn(username, password, {
-			success : function(user) {
-				showApp();
-			},
-			error : function(user, error) {
-				$(".login-form .error").html(
-						"Invalid username or password. Please try again.")
-						.show();
-				$(".login-form button").removeAttr("disabled");
-			}
-		});
-		return false;
-	}
-
 	function logout() {
 		Parse.User.logOut();
-		init();
+		initWIMP();
 	}
 
 	function signup() {
@@ -120,7 +125,7 @@ $(function() {
 			ACL : new Parse.ACL()
 		}, {
 			success : function(user) {
-				showApp();
+				self.showApp();
 			},
 			error : function(user, error) {
 				self.$(".signup-form .error").html(error.message).show();
@@ -137,8 +142,7 @@ $(function() {
 		var longitude = this.$("#lon").val();
 		var latitude = this.$("#lat").val();
 
-		var positionObject = new PositionObject(); // New Instance of
-													// TestObject
+		var positionObject = new PositionObject(); // New Instance of TestObject
 		positionObject.set("long", longitude);
 		positionObject.set("lat", latitude);
 		positionObject.set("ACL", new Parse.ACL(Parse.User.current()));
@@ -158,12 +162,4 @@ $(function() {
 
 		return false;
 	}
-
-	// var intervalId = setTimeout(update(), 10000);
-	// function update() {
-	// alert("Hallo");
-	// }
-	// google.maps.event.addDomListener(window, 'load', initialize);
 });
-
-// Tabelle Location: PhoneID, Lat, Long, [Timestamp]
