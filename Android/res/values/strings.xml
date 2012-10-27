@@ -2,4 +2,11 @@
 <resources>
     <string name="hello">Hello World, ParseStarterProjectActivity!</string>
     <string name="app_name">ParseStarterProject</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_logut">Logout</string>
+    <string name="lbl_last_geoposition">Last Geoposition:</string>
+    <string name="lbl_longitude">"Longitude: "</string>
+    <string name="lbl_latitude">"Latitude: "</string>
+    <string name="lbl_status">"Status: "</string>
 </resources>

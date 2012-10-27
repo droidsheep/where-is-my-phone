@@ -5,8 +5,45 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/lbl_last_pos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="@string/lbl_last_geoposition" />
+
+    <TextView
+        android:id="@+id/lbl_lon"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_longitude" />
+
+    <TextView
+        android:id="@+id/lbl_lat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_latitude" />
+
+    <TextView
+        android:id="@+id/lbl_status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_status" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_start" />
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_stop" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_logut" />
 
 </LinearLayout>
