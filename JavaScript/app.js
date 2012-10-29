@@ -5,28 +5,9 @@ $(function() {
 	Parse.initialize("hCUZFiOue9RLNMOOKuC91YVx7zMCTOwVhVSpm9CG", "FoT3FhKGxK2BmQxyMBpohb2icTh1yj4W59kjcwmE");
 	var PositionObject = Parse.Object.extend("PositionObject"); // New subclass of Parse.Object
 
-	var query = new Parse.Query(PositionObject);
-	query.ascending("createdAt");
-	// query.equalTo("user", Parse.User.current());
-
-	//	var usr = "theuser";
-	//	var pwd = "thepwd";
-	//	Parse.User.logIn(usr, pwd, {
-	//		success : function(user) {
-	//			self.showApp();
-	//			console.log(self);
-	//		},
-	//		error : function(user, error) {
-	//			$(".login-form .error").html("Invalid username or password. Please try again.").show();
-	//			$(".login-form button").removeAttr("disabled");
-	//			console.log(self);
-	//			console.log("error");
-	//		}
-	//	});
-
 	var map = null;
 	var mapOptions = {
-		zoom : 5,
+		zoom : 13,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 
@@ -85,6 +66,10 @@ $(function() {
 	}
 
 	function update() {
+		var query = new Parse.Query(PositionObject);
+		query.ascending("createdAt");
+		query.equalTo("User", Parse.User.current());
+		query.limit(10);
 		query.find({
 			success : function(results) {
 				if (map == null)
@@ -139,8 +124,8 @@ $(function() {
 	}
 
 	function insert() {
-		var longitude = this.$("#lon").val();
-		var latitude = this.$("#lat").val();
+		var longitude = parseFloat(this.$("#lon").val());
+		var latitude = parseFloat(this.$("#lat").val());
 
 		var positionObject = new PositionObject(); // New Instance of TestObject
 		positionObject.set("long", longitude);
