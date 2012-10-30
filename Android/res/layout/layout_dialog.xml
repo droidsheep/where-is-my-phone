@@ -22,4 +22,9 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:hint="password"/>
+    <Button 
+        android:id="@+id/btnLogin"
+        android:text="Login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

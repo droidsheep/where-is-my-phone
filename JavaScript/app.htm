@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>My Parse App</title>
+  <title>Where is my phone?</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/reset.css">
@@ -19,7 +19,6 @@
     <h1>Where is my phone?</h1>
 
     <p>Install the Android App, log-in and track your phone here!</p>
-
     
     <div style="display:none" class="login">
 	    
@@ -41,6 +40,7 @@
     </div>
     
     <div class="appcontent"  style="display:none">
+        <div class="position"></div>
     	<div id="themap"></div>
 		<form class="add-point-form">
 		    <h2>Add new point</h2>
@@ -48,22 +48,6 @@
 		    <input type="text" id="lat" placeholder="latitude" />
 		    <button>Add Point</button>
     	</form>
-    </div>
-    
-    
-    
-    <div style="display:none" class="error">
-      Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Parse.initialize</code> in this file.
-    </div>
-
-    <div style="display:none" class="success">
-      <p>We've also just created your first object using the following code:</p>
-      
-        <code>
-          var TestObject = Parse.Object.extend("TestObject");<br/>
-          var testObject = new TestObject();<br/>
-          testObject.save({foo: "bar"});
-        </code>
     </div>
   </div>
 </body>

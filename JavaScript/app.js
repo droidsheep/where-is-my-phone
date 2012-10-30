@@ -2,12 +2,15 @@ $(function() {
 
 	Parse.$ = jQuery;
 
-	Parse.initialize("hCUZFiOue9RLNMOOKuC91YVx7zMCTOwVhVSpm9CG", "FoT3FhKGxK2BmQxyMBpohb2icTh1yj4W59kjcwmE");
-	var PositionObject = Parse.Object.extend("PositionObject"); // New subclass of Parse.Object
+	Parse.initialize("hCUZFiOue9RLNMOOKuC91YVx7zMCTOwVhVSpm9CG",
+			"FoT3FhKGxK2BmQxyMBpohb2icTh1yj4W59kjcwmE");
+	var PositionObject = Parse.Object.extend("PositionObject"); // New subclass
+	// of
+	// Parse.Object
 
 	var map = null;
 	var mapOptions = {
-		zoom : 13,
+		zoom : 15,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 
@@ -43,7 +46,9 @@ $(function() {
 				showApp();
 			},
 			error : function(user, error) {
-				$(".login-form .error").html("Invalid username or password. Please try again.").show();
+				$(".login-form .error").html(
+						"Invalid username or password. Please try again.")
+						.show();
 				$(".login-form button").removeAttr("disabled");
 			}
 		});
@@ -63,37 +68,48 @@ $(function() {
 		$(".login").show();
 		$(".logout").hide();
 		$(".appcontent").hide();
+		$(".login-form button").removeAttr("disabled");
 	}
 
 	function update() {
 		var query = new Parse.Query(PositionObject);
-		query.ascending("createdAt");
+		query.descending("createdAt");
 		query.equalTo("User", Parse.User.current());
 		query.limit(10);
-		query.find({
-			success : function(results) {
-				if (map == null)
-					return;
-				var myLatlng = null;
-				for ( var i = 0; i < results.length; i++) {
-					var point = results[i];
-					var lat = point.get("lat");
-					var lon = point.get("long");
-					var createdAt = point.get("createdAt");
+		query
+				.find({
+					success : function(results) {
+						if (map == null)
+							return;
+						var myLatlng = null;
+						var point = null;
+						for ( var i = results.length - 1; i >= 0; i--) {
+							point = results[i];
+							var lat = point.get("lat");
+							var lon = point.get("long");
+							var createdAt = point.createdAt;
 
-					myLatlng = new google.maps.LatLng(lat, lon);
-					new google.maps.Marker({
-						position : myLatlng,
-						map : map,
-						title : createdAt
-					});
-				}
-				map.setCenter(myLatlng);
-			},
-			error : function(error) {
-				$("#themap").html("ERROR");
-			}
-		});
+							myLatlng = new google.maps.LatLng(lat, lon);
+							new google.maps.Marker({
+								position : myLatlng,
+								map : map,
+								title : createdAt
+							});
+						}
+						map.setCenter(myLatlng);
+
+						var posTxt = $(".position");
+						var tmptxt = "The last position of your phone is: <br><br>Latitude: "
+								+ point.get("lat")
+								+ "<br>Longitude: "
+								+ point.get("long")
+								+ "<br>Timestamp "
+								+ point.createdAt;
+						posTxt.html(tmptxt);
+					},
+					error : function(error) {
+					}
+				});
 	}
 
 	function logout() {
@@ -127,7 +143,8 @@ $(function() {
 		var longitude = parseFloat(this.$("#lon").val());
 		var latitude = parseFloat(this.$("#lat").val());
 
-		var positionObject = new PositionObject(); // New Instance of TestObject
+		var positionObject = new PositionObject(); // New Instance of
+		// TestObject
 		positionObject.set("long", longitude);
 		positionObject.set("lat", latitude);
 		positionObject.set("ACL", new Parse.ACL(Parse.User.current()));
